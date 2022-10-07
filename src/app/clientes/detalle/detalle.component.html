@@ -1,0 +1,47 @@
+<div *ngIf="modalServices.modal" class="abrir-modal animacion fadeIn">
+  <div *ngIf="modalServices.modal" class="modal" tabindex="-1" style="display: block;">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ titulo }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="cerrarModal()"></button>
+        </div>
+        <div class="modal-body">
+          <div class="container" *ngIf="cliente != null && cliente != undefined">
+            <div class="row">
+              <div class="col-sm">
+                <ul class="list-group text-dark mb-3">
+                  <li class="list-group-item active">{{ cliente.nombre }}</li>
+                  <li class="list-group-item">{{ cliente.apellido }}</li>
+                  <li class="list-group-item">{{ cliente.email }}</li>
+                  <li class="list-group-item">{{ cliente.createAt }}</li>
+                  <li class="list-group-item">{{ cliente.region.nombre }}</li>
+                </ul>
+                <div class="input-group mb-3">
+                  <input type="file" (change)="seleccionarFoto($event)" class="form-control" id="inputGroupFile04"
+                    aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                  <button class="btn btn-outline-secondary" [disabled]="!foto" (click)="subirFoto()" type="button"
+                    id="inputGroupFileAddon04">Subir
+                    Foto</button>
+                </div>
+                <div *ngIf="progreso > 0" class="progress" style="height: 40px;">
+                  <div class="progress-bar progress-bar-striped" role="progressbar" [ngStyle]="{width: progreso + '%'}"
+                    attr.aria-valuenow="{{ progreso }}" aria-valuemin="0" aria-valuemax="100">{{ progreso + '%' }}</div>
+                </div>
+              </div>
+              <div class="col-sm">
+                <img *ngIf="cliente != null && cliente != undefined && cliente.foto"
+                  src="http://localhost:8181/api/clientes/uploads/img/{{cliente.foto}}" alt="{{cliente.foto}}"
+                  class="img-thumbnail rounded">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-warning" data-bs-dismiss="modal" (click)="cerrarModal()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

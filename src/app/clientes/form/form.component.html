@@ -1,0 +1,77 @@
+<ul *ngIf="errors?.length" class="alert alert-danger">
+  <li *ngFor="let error of errors">{{ error }}</li>
+</ul>
+<div class="card bg-dark text-white">
+  <div class="card-header">{{ titulo }}</div>
+  <div class="card-body">
+    <form (ngSubmit)="create()" #formCliente="ngForm">
+      <div class="form-group row py-1 my-1">
+        <label for="nombre" class="col-form-label col-sm-2">Nombre</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="cliente.nombre" #nombre="ngModel"/>
+          <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+            <div *ngIf="nombre.errors.required">
+              El nombre es requerido
+            </div>
+            <div *ngIf="nombre.errors.minlength">
+              El nombre debe ser almenos de 4 caracteres
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row py-1 my-1">
+        <label for="apellido" class="col-form-label col-sm-2">Apellido</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="apellido" name="apellido" [(ngModel)]="cliente.apellido" #apellido="ngModel"/>
+          <div class="alert alert-danger" *ngIf="apellido.invalid && (apellido.dirty || apellido.touched)">
+            <div *ngIf="apellido.errors.required">
+              El apellido es requerido
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row py-1 my-1">
+        <label for="email" class="col-form-label col-sm-2">E-Mail</label>
+        <div class="col-sm-6">
+          <input type="email" class="form-control" id="email" name="email" [(ngModel)]="cliente.email" #email="ngModel"/>
+          <div class="alert alert-danger" *ngIf="email.invalid && (email.dirty || email.touched)">
+            <div *ngIf="email.errors.required">
+              El E-Mail es requerido
+            </div>
+            <div *ngIf="email.errors.email">
+              El E-Mail ingresado debe tener un formato valido
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row py-1 my-1">
+        <label for="createAt" class="col-form-label col-sm-2">Fecha</label>
+        <div class="col-sm-6">
+          <input matInput [matDatepicker]="pickerCreateAt" class="form-control" id="createAt" name="createAt" [(ngModel)]="cliente.createAt" #createAt="ngModel" style="display: inline; width: 300px;">
+          <mat-datepicker-toggle matSuffix [for]="pickerCreateAt"></mat-datepicker-toggle>
+          <mat-datepicker #pickerCreateAt></mat-datepicker>
+          <div class="alert alert-danger" *ngIf="createAt.invalid && (createAt.dirty || createAt.touched)">
+            <div *ngIf="createAt.errors.required">
+              El apellido es requerido
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row py-1 my-1">
+        <label for="region" class="col-form-label col-sm-2">Region</label>
+        <div class="col-sm-6">
+          <select  class="form-control" id="region" name="region" placeholder="--- Seleccionar region ---" [(ngModel)]="cliente.region" [compareWith]="compararRegion" #region="ngModel" style="width: 500px;">
+            <option [ngValue]="undefined">--- Seleccionar region ---</option>
+            <option *ngFor="let region of regiones" [ngValue]="region">{{ region.nombre }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row py-1 my-1">
+        <div class="col-sm-6">
+          <button class="btn btn-primary mx-1" role="button" [disabled]="!formCliente.form.valid">{{ id != null && id ? 'Editar Cliente' : 'Crear Cliente' }}</button>
+          <button class="btn btn-warning mx-1" role="button" [routerLink]="'/clientes'">Regresar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
