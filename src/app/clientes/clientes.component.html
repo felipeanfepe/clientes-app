@@ -4,7 +4,7 @@
   <div class="card-body text-primary">
     <h5 class="card-title">Listado de clientes</h5>
     <div class="my-2 text-left">
-      <button class="btn btn-rounded btn-primary" type="button" [routerLink]="'/clientes/create'">Crear Cliente</button>
+      <button *ngIf="authService.hasRole('ROLE_ADMIN')" class="btn btn-rounded btn-primary" type="button" [routerLink]="'/clientes/create'">Crear Cliente</button>
     </div>
     <div *ngIf="clientes?.length == 0" class="alert alert-info">
       No hay registros para mostrar!
@@ -12,17 +12,17 @@
     <table class="table table-bordered table-striped" *ngIf="clientes?.length">
       <thead>
         <tr>
-          <th class="text-center">#</th>
+          <th *ngIf="authService.hasRole('ROLE_USER')" class="text-center">#</th>
           <th>Nombre</th>
           <th>Apellido</th>
           <th>Email</th>
           <th>Fecha de creacion</th>
-          <th>Acciones</th>
+          <th *ngIf="authService.hasRole('ROLE_ADMIN')">Acciones</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let cliente of clientes" >
-          <td class="text-center">
+          <td  class="text-center">
             <img *ngIf="!cliente.foto" style="width: 64px; height: 64px; cursor: pointer;"
               src="http://localhost:8181/images/no-usuario.png" alt="Sin foto"
               class="img-thumbnail rounded" (click)="ablirModal(cliente)">
@@ -34,13 +34,13 @@
           <td>{{ cliente.apellido }}</td>
           <td>{{ cliente.email }}</td>
           <td>{{ cliente.createAt }}</td>
-          <td>
+          <td *ngIf="authService.hasRole('ROLE_ADMIN')">
             <div class="row">
-              <div class="col-6">
-                <button class="btn btn-primary w-100" type="button" (click)="editar(cliente.id)" >Editar</button>
+              <div *ngIf="authService.hasRole('ROLE_ADMIN')" class="col-6">
+                <button *ngIf="authService.hasRole('ROLE_ADMIN')" class="btn btn-primary w-100" type="button" (click)="editar(cliente.id)" >Editar</button>
               </div>
-              <div class="col-6">
-                <button class="btn btn-danger w-100" type="button" (click)="delete(cliente)" >Eliminar</button>
+              <div *ngIf="authService.hasRole('ROLE_ADMIN')" class="col-6">
+                <button *ngIf="authService.hasRole('ROLE_ADMIN')" class="btn btn-danger w-100" type="button" (click)="delete(cliente)" >Eliminar</button>
               </div>
             </div>
           </td>
