@@ -1,0 +1,52 @@
+<div class="card bg-light" *ngIf="factura && factura?.id">
+  <div class="card-header">
+    {{titulo}}: {{factura?.descripcion ? factura?.descripcion : ''}}
+  </div>
+  <div class="card-body">
+    <h4 class="card-title">
+      <a [routerLink]="['/clientes']" class="btn btn-light btn-xs">&laquo; volver</a>
+    </h4>
+
+    <ul class="list-group my-2">
+      <li class="list-group-item list-group-item-primary">Datos del cliente</li>
+      <li class="list-group-item">{{factura?.cliente?.nombre}}</li>
+      <li class="list-group-item">{{factura?.cliente?.apellido}}</li>
+    </ul>
+    <ul class="list-group my-2">
+      <li class="list-group-item list-group-item-primary">Factura</li>
+      <li class="list-group-item">Folio: {{factura?.id}}</li>
+      <li class="list-group-item">Descripcion: {{factura?.descripcion ? factura?.descripcion : ''}}</li>
+      <li class="list-group-item">Fecha: {{factura?.createAt}}</li>
+    </ul>
+    <table class="table table-striped table-hover table-bordered my-3">
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Precio</th>
+          <th>Cantidad</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of factura?.items">
+          <td>{{item.producto.nombre}}</td>
+          <td>{{item.producto.precio}}</td>
+          <td>{{item.cantidad}}</td>
+          <td>{{item.importe}}</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <td class="text-center" colspan="3"><h2>Total</h2></td>
+        <td><h3>{{factura.total}}</h3></td>
+      </tfoot>
+    </table>
+    <div class="card border-info mb-4">
+      <div class="card card-header">
+        Observaciones
+      </div>
+      <div class="card card-body">
+        <p>{{factura?.observacion ? factura?.observacion : 'No tiene observacion'}}</p>
+      </div>
+    </div>
+  </div>
+</div>

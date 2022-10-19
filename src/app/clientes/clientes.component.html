@@ -12,7 +12,8 @@
     <table class="table table-bordered table-striped" *ngIf="clientes?.length">
       <thead>
         <tr>
-          <th *ngIf="authService.hasRole('ROLE_USER')" class="text-center">#</th>
+          <!-- <th *ngIf="authService.hasRole('ROLE_USER')" class="text-center">#</th> -->
+          <th class="text-center">#</th>
           <th>Nombre</th>
           <th>Apellido</th>
           <th>Email</th>
@@ -22,7 +23,8 @@
       </thead>
       <tbody>
         <tr *ngFor="let cliente of clientes" >
-          <td  class="text-center">
+          <!-- <td *ngIf="authService.hasRole('ROLE_USER')" class="text-center"> -->
+          <td class="text-center">
             <img *ngIf="!cliente.foto" style="width: 64px; height: 64px; cursor: pointer;"
               src="http://localhost:8181/images/no-usuario.png" alt="Sin foto"
               class="img-thumbnail rounded" (click)="ablirModal(cliente)">

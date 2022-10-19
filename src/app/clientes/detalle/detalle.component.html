@@ -35,6 +35,39 @@
                   class="img-thumbnail rounded">
               </div>
             </div>
+            <div class="row">
+              <ng-container *ngIf="cliente && !cliente.facturas.length">
+                <div class="alert alert-info my-4">
+                  No hay facturas asignadas para el Cilente {{ cliente.nombre + ' ' + cliente.apellido }}
+                </div>
+              </ng-container>
+              <ng-container  *ngIf="cliente && cliente.facturas.length">
+                <table class="table table-bordered table-striped my-4">
+                  <thead>
+                    <tr>
+                      <th>Folio</th>
+                      <th>Descripcion</th>
+                      <th>Fecha</th>
+                      <th>Total</th>
+                      <th>Detalle</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let factura of cliente.facturas">
+                      <td>{{ factura.id }}</td>
+                      <td>{{ factura.descripcion }}</td>
+                      <td>{{ factura.createAt }}</td>
+                      <td>{{ factura.total }}</td>
+                      <td>
+                        <button class="btn btn-primary btn-sm" type="button" (click)="verDetalleFactura(factura.id)">
+                          Ver
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </ng-container>
+            </div>
           </div>
         </div>
         <div class="modal-footer">

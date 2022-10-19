@@ -1,6 +1,6 @@
 import { HttpEventType } from '@angular/common/http';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../usuarios/auth.service';
 import Swal from 'sweetalert2';
 import { Cliente } from '../cliente';
@@ -22,6 +22,7 @@ export class DetalleComponent implements OnInit {
 
   constructor(
     private _clienteService: ClientesService,
+    private router: Router,
     public authService: AuthService,
     public modalServices: ModalService
   ) { }
@@ -79,5 +80,9 @@ export class DetalleComponent implements OnInit {
     this.foto = null;
     this.progreso = 0;
     this.modalServices.cerrarModal();
+  }
+
+  public verDetalleFactura(id) {
+    this.router.navigate(['/facturas', id]);
   }
 }
