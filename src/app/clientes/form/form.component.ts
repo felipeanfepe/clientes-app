@@ -50,6 +50,7 @@ export class FormClienteComponent implements OnInit {
   public create(): void {
     this.errors = [];
     if (this.id != null && this.id){
+      this.cliente.facturas = null;
       this._clientesServicce.updateCliente(this.cliente, this.id).subscribe(
         (resp: Cliente) => {
           swal.fire(

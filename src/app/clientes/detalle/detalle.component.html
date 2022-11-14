@@ -35,6 +35,10 @@
                   class="img-thumbnail rounded">
               </div>
             </div>
+            <div class="row" *ngIf="authService.hasRole('ROLE_ADMIN')">
+              <button class="btn btn-success w-100" type="button"
+                (click)="crearFactura(cliente.id)">Crear Factura</button>
+            </div>
             <div class="row">
               <ng-container *ngIf="cliente && !cliente.facturas.length">
                 <div class="alert alert-info my-4">
@@ -49,7 +53,7 @@
                       <th>Descripcion</th>
                       <th>Fecha</th>
                       <th>Total</th>
-                      <th>Detalle</th>
+                      <th *ngIf="authService.hasRole('ROLE_ADMIN')" class="text-center">Acciones</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -58,9 +62,12 @@
                       <td>{{ factura.descripcion }}</td>
                       <td>{{ factura.createAt }}</td>
                       <td>{{ factura.total }}</td>
-                      <td>
-                        <button class="btn btn-primary btn-sm" type="button" (click)="verDetalleFactura(factura.id)">
+                      <td *ngIf="authService.hasRole('ROLE_ADMIN')" class="text-center">
+                        <button class="btn btn-primary btn-sm mx-1" type="button" (click)="verDetalleFactura(factura.id)">
                           Ver
+                        </button>
+                        <button class="btn btn-danger btn-sm mx-1" type="button" (click)="eliminarFactura(factura)">
+                          Eliminar
                         </button>
                       </td>
                     </tr>

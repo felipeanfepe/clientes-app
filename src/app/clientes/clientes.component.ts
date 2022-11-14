@@ -78,4 +78,8 @@ export class ClientesComponent implements OnInit {
     this.clienteSeleccionado = cliente;
     this.modalServices.abrirModal();
   }
+
+  public crearFactura(cliente_id: number) {
+    this.router.navigate(['/facturas/form', cliente_id]);
+  }
 }

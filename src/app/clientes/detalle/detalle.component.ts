@@ -6,6 +6,8 @@ import Swal from 'sweetalert2';
 import { Cliente } from '../cliente';
 import { ClientesService } from '../clientes.service';
 import { ModalService } from './modal.service';
+import { FacturaService } from '../../facturas/services/factura.service';
+import { Factura } from '../../facturas/models/factura';
 
 @Component({
   selector: 'detalle-cliente',
@@ -22,6 +24,7 @@ export class DetalleComponent implements OnInit {
 
   constructor(
     private _clienteService: ClientesService,
+    private _facturaService: FacturaService,
     private router: Router,
     public authService: AuthService,
     public modalServices: ModalService
@@ -82,7 +85,34 @@ export class DetalleComponent implements OnInit {
     this.modalServices.cerrarModal();
   }
 
-  public verDetalleFactura(id) {
+  public verDetalleFactura(id: number) {
     this.router.navigate(['/facturas', id]);
+  }
+
+  public crearFactura(cliente_id: number) {
+    this.router.navigate(['/facturas/form', cliente_id]);
+  }
+
+  public eliminarFactura(factura: Factura) {
+    Swal.fire({
+      title: `¿Esta seguro que quiere eliminar la factura ${factura.descripcion}?`,
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: 'Si, eliminar!',
+      denyButtonText: `No, calcelar!`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this._facturaService.delete(factura.id).subscribe(
+          (resp: any) => {
+            this.cliente.facturas = this.cliente.facturas.filter(fact => fact !== factura);
+            Swal.fire(
+              'Factura Eliminada',
+              resp.mensaje,
+              'success'
+            );
+          }
+        );
+      }
+    });
   }
 }

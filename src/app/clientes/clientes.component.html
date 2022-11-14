@@ -12,19 +12,17 @@
     <table class="table table-bordered table-striped" *ngIf="clientes?.length">
       <thead>
         <tr>
-          <!-- <th *ngIf="authService.hasRole('ROLE_USER')" class="text-center">#</th> -->
-          <th class="text-center">#</th>
+          <th *ngIf="authService.hasRole('ROLE_USER')" class="text-center">#</th>
           <th>Nombre</th>
           <th>Apellido</th>
           <th>Email</th>
           <th>Fecha de creacion</th>
-          <th *ngIf="authService.hasRole('ROLE_ADMIN')">Acciones</th>
+          <th class="text-center" *ngIf="authService.hasRole('ROLE_ADMIN')">Acciones</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let cliente of clientes" >
-          <!-- <td *ngIf="authService.hasRole('ROLE_USER')" class="text-center"> -->
-          <td class="text-center">
+          <td *ngIf="authService.hasRole('ROLE_USER')" class="text-center">
             <img *ngIf="!cliente.foto" style="width: 64px; height: 64px; cursor: pointer;"
               src="http://localhost:8181/images/no-usuario.png" alt="Sin foto"
               class="img-thumbnail rounded" (click)="ablirModal(cliente)">
@@ -38,10 +36,14 @@
           <td>{{ cliente.createAt }}</td>
           <td *ngIf="authService.hasRole('ROLE_ADMIN')">
             <div class="row">
-              <div *ngIf="authService.hasRole('ROLE_ADMIN')" class="col-6">
+              <div *ngIf="authService.hasRole('ROLE_ADMIN')" class="col-4">
+                <button *ngIf="authService.hasRole('ROLE_ADMIN')" class="btn btn-success w-100" type="button"
+                  (click)="crearFactura(cliente.id)">Crear Factura</button>
+              </div>
+              <div *ngIf="authService.hasRole('ROLE_ADMIN')" class="col-4">
                 <button *ngIf="authService.hasRole('ROLE_ADMIN')" class="btn btn-primary w-100" type="button" (click)="editar(cliente.id)" >Editar</button>
               </div>
-              <div *ngIf="authService.hasRole('ROLE_ADMIN')" class="col-6">
+              <div *ngIf="authService.hasRole('ROLE_ADMIN')" class="col-4">
                 <button *ngIf="authService.hasRole('ROLE_ADMIN')" class="btn btn-danger w-100" type="button" (click)="delete(cliente)" >Eliminar</button>
               </div>
             </div>
